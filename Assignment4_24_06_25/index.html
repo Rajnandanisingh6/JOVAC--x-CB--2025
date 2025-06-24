@@ -1,0 +1,122 @@
+// HW- Do different operation with event capturing and bubbling.
+// Change the output, parent - parent, child - child, grandparent - grandparent, without event capturing/bubbling.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Bubbling and Capturing</title>
+
+  <!-- Style for the boxes -->
+  <style>
+    .grandparent, .parent, .child {
+      padding: 30px;            /* Add space inside each box */
+      margin: 10px;             /* Add space outside each box */
+      border: 2px solid black;  /* Black border */
+      font-size: 20px;          /* Increase text size */
+      cursor: pointer;          /* Pointer cursor on hover */
+    }
+
+    /* Background colors for each box */
+    .grandparent { background-color: lightblue; }
+    .parent { background-color: lightgreen; }
+    .child { background-color: lightcoral; }
+  </style>
+</head>
+<body>
+
+  <!-- Grandparent box contains parent -->
+  <div class="grandparent">
+    Grandparent
+    <!-- Parent box contains child -->
+    <div class="parent">
+      Parent
+      <!-- Child box -->
+      <div class="child">Child</div>
+    </div>
+  </div>
+
+  <script>
+    // Get all three boxes from the DOM
+    const grandparent = document.querySelector('.grandparent');
+    const parent = document.querySelector('.parent');
+    const child = document.querySelector('.child');
+
+    // -----------------------------------
+    //  1. Event Bubbling (Child → Parent → Grandparent)
+    // -----------------------------------
+    function useBubbling() {
+      // When child is clicked, this runs first
+      child.addEventListener('click', () => {
+        alert('child - child'); // Show alert for child
+      });
+
+      // Parent will run next due to bubbling
+      parent.addEventListener('click', () => {
+        alert('parent - parent'); // Show alert for parent
+      });
+
+      // Grandparent runs last
+      grandparent.addEventListener('click', () => {
+        alert('grandparent - grandparent'); // Show alert for grandparent
+      });
+    }
+
+    // -----------------------------------
+    //  2. Event Capturing (Grandparent → Parent → Child)
+    // -----------------------------------
+    function useCapturing() {
+      // Grandparent runs first in capturing phase
+      grandparent.addEventListener('click', () => {
+        alert('grandparent - grandparent'); // Show alert for grandparent
+      }, true); // true = use capture mode
+
+      // Parent runs second
+      parent.addEventListener('click', () => {
+        alert('parent - parent'); // Show alert for parent
+      }, true);
+
+      // Child runs last
+      child.addEventListener('click', () => {
+        alert('child - child'); // Show alert for child
+      }, true);
+    }
+
+    // -----------------------------------
+    //  3. No Bubbling or Capturing (Only the clicked element handles the event)
+    // -----------------------------------
+    function useOnlySelfHandle() {
+      // Grandparent listens but only responds if clicked directly
+      grandparent.addEventListener('click', (e) => {
+        if (e.target.classList.contains('grandparent')) {
+          alert('grandparent - grandparent'); // Show alert for grandparent
+        }
+      });
+
+      // Parent listens but only responds if clicked directly
+      parent.addEventListener('click', (e) => {
+        if (e.target.classList.contains('parent')) {
+          alert('parent - parent'); // Show alert for parent
+        }
+      });
+
+      // Child listens but only responds if clicked directly
+      child.addEventListener('click', (e) => {
+        if (e.target.classList.contains('child')) {
+          alert('child - child'); // Show alert for child
+        }
+      });
+    }
+
+    // -----------------------------------
+    // Choose which one to test by uncommenting it
+    // Only ONE should be active at a time
+    // -----------------------------------
+
+    useBubbling();        // Default bubbling (bottom → top)
+    // useCapturing();    // Uncomment to test capturing (top → bottom)
+    // useOnlySelfHandle(); // Uncomment to test without bubbling or capturing
+
+  </script>
+</body>
+</html>
