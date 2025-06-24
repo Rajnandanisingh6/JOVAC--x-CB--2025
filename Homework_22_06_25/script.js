@@ -6,7 +6,7 @@
 </head>
 <body>
 
-  <h1>🛒 Simple E-Commerce Cart (Using map, filter, reduce)</h1>
+  <h1> Build business logic(Using map, filter, reduce)</h1>
   <p><strong>Initial Balance:</strong> ₹50,000</p>
   <div id="output"></div>
 
