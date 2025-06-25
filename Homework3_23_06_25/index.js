@@ -134,7 +134,7 @@
         // Step 3: Call function to display profile
         showProfile(user, repos.slice(0, 5)); // Show only first 5 repos
       } catch (error) {
-        // 🛑 Show error in the profile card
+        //  Show error in the profile card
         card.innerHTML = `<p style="color: red;">${error.message}</p>`;
       }
     }
