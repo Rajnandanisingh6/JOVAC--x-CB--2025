@@ -50,7 +50,7 @@
       return product.inStock === true;
     });
 
-    // Use reduce to calculate total cost of in-stock discounted products
+    // Using reduce to calculate total cost of in-stock discounted products
     const totalCost = availableProducts.reduce(function(total, product) {
       return total + product.discountedPrice;
     }, 0);
